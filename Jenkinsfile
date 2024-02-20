@@ -8,8 +8,7 @@ pipeline {
     stages {
         stage('Deploy to S3') {
             steps {
-                // Checkout the repository using git
-                git 'https://github.com/Raj000007/react.git'
+        
 
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     script {
