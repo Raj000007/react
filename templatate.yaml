@@ -13,7 +13,6 @@ Resources:
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: error.html
-      ObjectOwnership: BucketOwnerPreferred
       PublicAccessBlockConfiguration:
         BlockPublicAcls: false
         IgnorePublicAcls: false
@@ -32,6 +31,23 @@ Resources:
             Action: "s3:GetObject" 
             Resource: !Sub "arn:aws:s3:::${BucketName}/*"
 
+  EnforceObjectOwnership:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref ReactAppBucket
+      PolicyDocument:
+        Statement:
+          - Sid: EnforceObjectOwnership
+            Effect: Deny
+            Principal: '*'
+            Action: "s3:PutObject"
+            Resource: !Sub "arn:aws:s3:::${BucketName}/*"
+            Condition:
+              StringNotEquals:
+                "s3:x-amz-acl": "bucket-owner-full-control"
+
+Conditions:
+  UseDefaultBucketName: !Equals react-app-bucket-unique
 
 
 Outputs:
