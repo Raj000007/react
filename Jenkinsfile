@@ -24,11 +24,11 @@ pipeline {
                         echo createStack
 
                         // Upload index.html and error.html to S3 bucket
-                        sh "aws s3 cp index.html s3://MyReactAppBucket/index.html --region ${AWS_DEFAULT_REGION}"
-                        sh "aws s3 cp error.html s3://MyReactAppBucket/error.html --region ${AWS_DEFAULT_REGION}"
+                        sh "aws s3 cp index.html s3://react-website-login-9535/index.html --region ${AWS_DEFAULT_REGION}"
+                        sh "aws s3 cp error.html s3://react-website-login-9535/error.html --region ${AWS_DEFAULT_REGION}"
 
                         // Configure S3 bucket for static website hosting
-                        sh "aws s3 website s3://MyReactAppBucket --index-document index.html --error-document error.html --region ${AWS_DEFAULT_REGION}"
+                        sh "aws s3 website s3://react-website-login-9535 --index-document index.html --error-document error.html --region ${AWS_DEFAULT_REGION}"
                     }
                 }
             }
