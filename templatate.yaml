@@ -19,7 +19,4 @@ Resources:
         BlockPublicPolicy: false
         RestrictPublicBuckets: false
 
-Outputs:
-  WebsiteURL:
-    Description: URL of the static website
-    Value: !GetAtt react-app-bucket-unique.WebsiteURL
+
