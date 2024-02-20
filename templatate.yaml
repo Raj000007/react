@@ -8,7 +8,7 @@ Resources:
   ReactAppBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: react-app-bucket-unique
+      BucketName: !Ref BucketName
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: error.html
@@ -17,3 +17,8 @@ Resources:
         IgnorePublicAcls: false
         BlockPublicPolicy: false
         RestrictPublicBuckets: false
+
+Outputs:
+  WebsiteURL:
+    Description: URL of the static website
+    Value: !GetAtt ReactAppBucket.WebsiteURL
