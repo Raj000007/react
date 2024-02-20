@@ -30,8 +30,7 @@ Resources:
             Principal: "*"
             Action: "s3:GetObject" 
             Resource: !Sub 
-              - "arn:aws:s3:::${BucketName}/*"
-              - BucketName: react-app-bucket-unique
+              - "arn:aws:s3:::react-app-bucket-unique/*"
 
 
 Outputs:
