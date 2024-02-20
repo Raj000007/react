@@ -8,7 +8,7 @@ Resources:
   ReactAppBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Ref BucketName
+      BucketName: react-app-bucket-unique
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: error.html
@@ -28,7 +28,7 @@ Resources:
             Effect: Allow
             Principal: "*"
             Action: "s3:GetObject"
-            Resource: !Sub "arn:aws:s3:::${BucketName}/*"
+            Resource: !Sub "arn:aws:s3:::react-app-bucket-unique/*"
 
 Outputs:
   WebsiteURL:
