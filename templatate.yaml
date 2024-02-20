@@ -8,7 +8,7 @@ Resources:
   ReactAppBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Ref BucketName
+      BucketName: react-app-bucket-unique
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: error.html
