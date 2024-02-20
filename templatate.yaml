@@ -9,6 +9,7 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: react-app-bucket-unique
+      AccessControl: PublicRead  # This enables ACLs for the bucket
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: error.html
@@ -18,6 +19,17 @@ Resources:
         BlockPublicPolicy: false
         RestrictPublicBuckets: false
 
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref ReactAppBucket
+      PolicyDocument:
+        Statement:
+          - Sid: PublicReadGetObject
+            Effect: Allow
+            Principal: "*"
+            Action: "s3:GetObject"
+            Resource: !Sub "arn:aws:s3:::react-app-bucket-unique/*"
 
 Outputs:
   WebsiteURL:
