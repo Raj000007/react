@@ -1,54 +1,42 @@
-Parameters:
-  BucketName:
-    Type: String
-    Description: Name for the S3 bucket
-    Default: react-app-bucket-unique
-
+AWSTemplateFormatVersion: 2010-09-09
 Resources:
-  ReactAppBucket:
-    Type: AWS::S3::Bucket
+  S3Bucket:
+    Type: 'AWS::S3::Bucket'
     Properties:
-      BucketName: react-app-bucket-unique
-      #AccessControl: PublicReadWrite  # This enables ACLs for the bucket and objects
+      AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: error.html
-      PublicAccessBlockConfiguration:
-        BlockPublicAcls: false
-        IgnorePublicAcls: false
-        BlockPublicPolicy: false
-        RestrictPublicBuckets: false
-
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
   BucketPolicy:
-    Type: AWS::S3::BucketPolicy
+    Type: 'AWS::S3::BucketPolicy'
     Properties:
-      Bucket: react-app-bucket-unique
       PolicyDocument:
+        Id: MyPolicy
+        Version: 2012-10-17
         Statement:
-          - Sid: PublicReadGetObject
+          - Sid: PublicReadForGetBucketObjects
             Effect: Allow
             Principal: '*'
-            Action: "s3:GetObject" 
-            Resource: !Sub "arn:aws:s3:::${BucketName}/*"
-
-  EnforceObjectOwnership:
-    Type: AWS::S3::BucketPolicy
-    Properties:
-      Bucket: !Ref ReactAppBucket
-      PolicyDocument:
-        Statement:
-          - Sid: EnforceObjectOwnership
-            Effect: Deny
-            Principal: '*'
-            Action: "s3:PutObject"
-            Resource: !Sub "arn:aws:s3:::${BucketName}/*"
-            Condition:
-              StringNotEquals:
-                "s3:x-amz-acl": "bucket-owner-full-control"
-
-
-
+            Action: 's3:GetObject'
+            Resource: !Join 
+              - ''
+              - - 'arn:aws:s3:::'
+                - !Ref S3Bucket
+                - /*
+      Bucket: !Ref S3Bucket
 Outputs:
   WebsiteURL:
-    Description: URL of the static website
-    Value: !GetAtt ReactAppBucket.WebsiteURL
+    Value: !GetAtt 
+      - S3Bucket
+      - WebsiteURL
+    Description: URL for website hosted on S3
+  S3BucketSecureURL:
+    Value: !Join 
+      - ''
+      - - 'https://'
+        - !GetAtt 
+          - S3Bucket
+          - DomainName
+    Description: Name of S3 bucket to hold website content
