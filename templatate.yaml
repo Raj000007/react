@@ -2,7 +2,7 @@ Parameters:
   BucketName:
     Type: String
     Description: Name for the S3 bucket
-    Default: myreactappbucket
+    Default: react-app-bucket-unique
 
 Resources:
   ReactAppBucket:
