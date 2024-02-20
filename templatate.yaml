@@ -8,7 +8,7 @@ Resources:
   ReactAppBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Ref BucketName
+      BucketName: react-app-bucket-unique
       AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: index.html
@@ -18,5 +18,4 @@ Resources:
         IgnorePublicAcls: false
         BlockPublicPolicy: false
         RestrictPublicBuckets: false
-
 
