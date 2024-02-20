@@ -2,13 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
-            steps {
-                // Your build steps here, e.g., npm install and npm run build for React app
-                sh 'npm install'
-                sh 'npm run build'
-            }
-        }
+    
 
         stage('Deploy to S3') {
             steps {
