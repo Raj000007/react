@@ -22,12 +22,12 @@ Resources:
   BucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
-      Bucket: !Ref ReactAppBucket
+      Bucket: react-app-bucket-unique
       PolicyDocument:
         Statement:
           - Sid: PublicReadGetObject
             Effect: Allow
-            Principal: *
+            Principal: "*"
             Action: "s3:GetObject"
             Resource: !Sub "arn:aws:s3:::react-app-bucket-unique/*"
 
