@@ -27,11 +27,9 @@ Resources:
         Statement:
           - Sid: PublicReadGetObject
             Effect: Allow
-            Principal: *
+            Principal: "*"
             Action: "s3:GetObject" 
-            Resource: !Sub 
-              - "arn:aws:s3:::${BucketName}/*"
-              - BucketName: react-app-bucket-unique
+            Resource: !Sub "arn:aws:s3:::${ReactAppBucket}/*"
 
 
 Outputs:
