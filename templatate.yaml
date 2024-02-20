@@ -22,4 +22,4 @@ Resources:
 Outputs:
   WebsiteURL:
     Description: URL of the static website
-    Value: !GetAtt ReactAppBucket.WebsiteURL
+    Value: !GetAtt react-app-bucket-unique.WebsiteURL
