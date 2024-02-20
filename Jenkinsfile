@@ -8,12 +8,10 @@ pipeline {
     stages {
         stage('Deploy to S3') {
             steps {
-        
-
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     script {
                         // Fetch the content of template.yaml from the local repository
-                        def templateBody = readFile('templatate.yaml')
+                        def templateBody = readFile('template.yaml')
 
                         // Create S3 bucket using CloudFormation with the specified region and credentials
                         def createStack = sh (
@@ -21,11 +19,10 @@ pipeline {
                             returnStdout: true
                         )
                         echo createStack
-                       
 
                         // Wait for the bucket creation to complete
                         waitForBucketCreation()
-                        
+
                         // Upload index.html and error.html to S3 bucket
                         sh "aws s3 cp index.html s3://react-app-bucket-unique/index.html --region ${AWS_DEFAULT_REGION}"
                         sh "aws s3 cp error.html s3://react-app-bucket-unique/error.html --region ${AWS_DEFAULT_REGION}"
@@ -36,5 +33,14 @@ pipeline {
                 }
             }
         }
+    }
+}
+
+def waitForBucketCreation() {
+    def stackStatus = sh(script: "aws cloudformation describe-stacks --stack-name MyReactAppBucket --query 'Stacks[0].StackStatus' --output text", returnStdout: true).trim()
+    
+    while (stackStatus != "CREATE_COMPLETE") {
+        sleep(time: 30, unit: 'SECONDS')
+        stackStatus = sh(script: "aws cloudformation describe-stacks --stack-name MyReactAppBucket --query 'Stacks[0].StackStatus' --output text", returnStdout: true).trim()
     }
 }
