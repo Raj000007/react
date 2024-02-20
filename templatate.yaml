@@ -2,7 +2,7 @@ Parameters:
   BucketName:
     Type: String
     Description: Name for the S3 bucket
-    Default: react-website-9535-login
+    Default: reactwebsite9535login
 
 Resources:
   ReactAppBucket:
