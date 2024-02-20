@@ -8,15 +8,27 @@ Resources:
   ReactAppBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: react-app-bucket-unique
+      BucketName: !Ref BucketName
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: error.html
       PublicAccessBlockConfiguration:
-        BlockPublicAcls: True
-        IgnorePublicAcls: True
-        BlockPublicPolicy: True
-        RestrictPublicBuckets: True
+        BlockPublicAcls: false
+        IgnorePublicAcls: false
+        BlockPublicPolicy: false
+        RestrictPublicBuckets: false
+
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref ReactAppBucket
+      PolicyDocument:
+        Statement:
+          - Sid: PublicReadGetObject
+            Effect: Allow
+            Principal: "*"
+            Action: "s3:GetObject"
+            Resource: !Sub "arn:aws:s3:::${BucketName}/*"
 
 Outputs:
   WebsiteURL:
