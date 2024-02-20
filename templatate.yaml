@@ -46,8 +46,6 @@ Resources:
               StringNotEquals:
                 "s3:x-amz-acl": "bucket-owner-full-control"
 
-Conditions:
-  UseDefaultBucketName: !Equals react-app-bucket-unique
 
 
 Outputs:
