@@ -21,7 +21,11 @@ pipeline {
                             returnStdout: true
                         )
                         echo createStack
+                       
 
+                        // Wait for the bucket creation to complete
+                        waitForBucketCreation()
+                        
                         // Upload index.html and error.html to S3 bucket
                         sh "aws s3 cp index.html s3://react-app-bucket-unique/index.html --region ${AWS_DEFAULT_REGION}"
                         sh "aws s3 cp error.html s3://react-app-bucket-unique/error.html --region ${AWS_DEFAULT_REGION}"
