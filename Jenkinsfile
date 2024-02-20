@@ -13,7 +13,7 @@ pipeline {
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     script {
                         // Fetch the content of template.yaml from the local repository
-                        def templateBody = readFile('template.yaml')
+                        def templateBody = readFile('templatate.yaml')
 
                         // Create S3 bucket using CloudFormation with the specified region and credentials
                         def createStack = sh (
