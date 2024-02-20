@@ -9,7 +9,7 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: react-app-bucket-unique
-      AccessControl: PublicRead  # This enables ACLs for the bucket
+      AccessControl: PublicReadWrite  # This enables ACLs for the bucket and objects
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: error.html
